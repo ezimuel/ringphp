@@ -130,6 +130,9 @@ class CurlMultiHandler
             }
 
             do {
+                if ($this->active === null) { 
+                    $this->active = 0;
+                }
                 $mrc = curl_multi_exec($this->_mh, $this->active);
             } while ($mrc === CURLM_CALL_MULTI_PERFORM);
 
