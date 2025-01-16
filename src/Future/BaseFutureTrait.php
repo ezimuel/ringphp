@@ -88,7 +88,7 @@ trait BaseFutureTrait
         return $this->wrappedPromise->then($onFulfilled, $onRejected, $onProgress);
     }
 
-    public function cancel()
+    public function cancel(): void
     {
         if (!$this->isRealized) {
             $cancelfn = $this->cancelfn;
