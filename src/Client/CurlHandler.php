@@ -50,6 +50,9 @@ class CurlHandler
 
     public function __destruct()
     {
+        if (PHP_VERSION_ID >= 80000) {
+            return;
+        }
         foreach ($this->handles as $handle) {
             if (is_resource($handle)) {
                 curl_close($handle);
@@ -117,7 +120,9 @@ class CurlHandler
     {
         $id = (int) $handle;
         if (count($this->ownedHandles) > $this->maxHandles) {
-            curl_close($this->handles[$id]);
+            if (PHP_VERSION_ID < 80000) {
+                curl_close($this->handles[$id]);
+            }
             unset($this->handles[$id], $this->ownedHandles[$id]);
         } else {
             // curl_reset doesn't clear these out for some reason

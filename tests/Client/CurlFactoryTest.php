@@ -72,7 +72,9 @@ class CurlFactoryTest extends TestCase
 
         $this->assertIsArray($result[1]);
         $this->assertSame($stream, $result[2]);
-        curl_close($result[0]);
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($result[0]);
+        }
 
         $this->assertEquals('PUT', $_SERVER['_curl'][CURLOPT_CUSTOMREQUEST]);
         $this->assertEquals(
